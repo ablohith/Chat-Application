@@ -1,24 +1,25 @@
-package com.span.bfs.chatapp;
+package com.span.bfs.chat;
+
 
 import java.net.*;
 import java.util.*;
 import java.io.*;
 
-//Server Class
 public class chatServer
-{   // Vectors to store and display the clients name and port 
-    static Vector ClientSockets;
-    static Vector LoginNames;
+{
+    //initialize the variables
+    static List ClientSockets;
+    static List LoginNames;
     
-    chatServer() throws Exception
+	chatServer() throws Exception
     {
-        // create socket using the port 5222
-        ServerSocket soc=new ServerSocket(5222);
-        ClientSockets=new Vector();
-        LoginNames=new Vector();
-        
-        
-        // accept the connection from client
+        //create the socket in the port 5212
+        ServerSocket soc=new ServerSocket(5212);
+        ClientSockets=new ArrayList();
+        LoginNames=new ArrayList();
+
+
+        // while loop to accept multiple clients
         while(true)
         {    
             Socket CSoc=soc.accept();        
@@ -26,13 +27,11 @@ public class chatServer
         }
     }
     
-    //Main method to start the server 
+    
     public static void main(String args[]) throws Exception
     {
-        chatServer ob=new chatServer();
         
-        //display the logged in clients
-        System.out.println(LoginNames);
+        chatServer ob=new chatServer();
     }
 
 class AcceptClient extends Thread
@@ -40,8 +39,6 @@ class AcceptClient extends Thread
     Socket ClientSocket;
     DataInputStream din;
     DataOutputStream dout;
-   
-    // constructor to create the connection
     AcceptClient (Socket CSoc) throws Exception
     {
         ClientSocket=CSoc;
@@ -50,12 +47,17 @@ class AcceptClient extends Thread
         dout=new DataOutputStream(ClientSocket.getOutputStream());
         
         String LoginName=din.readUTF();
-
-        //display the logged in clients name
-        System.out.println("User Logged In :" + LoginName);
-        LoginNames.add(LoginName);
-        ClientSockets.add(ClientSocket);    
-        start();
+        /*if(LoginNames.contains(LoginName))
+        {
+        	throw new nameexistException(LoginName);
+        	System.out.println("User already Exist");
+        }
+        else
+        {*/
+        	System.out.println("User Logged In :" + LoginName);
+        	LoginNames.add(LoginName);
+        	ClientSockets.add(ClientSocket);    
+        	start();
     }
 
     public void run()
@@ -64,8 +66,7 @@ class AcceptClient extends Thread
         {
             
             try
-            {   
-                // send the message to other client
+            {
                 String msgFromClient=new String();
                 msgFromClient=din.readUTF();
                 StringTokenizer st=new StringTokenizer(msgFromClient);
@@ -73,21 +74,24 @@ class AcceptClient extends Thread
                 String MsgType=st.nextToken();
                 int iCount=0;
     
-                // display the logged out connections
+                //display the logout message
                 if(MsgType.equals("LOGOUT"))
                 {
                     for(iCount=0;iCount<LoginNames.size();iCount++)
                     {
-                        if(LoginNames.elementAt(iCount).equals(Sendto))
+                        if(LoginNames.get(iCount).equals(Sendto))
                         {
-                            LoginNames.removeElementAt(iCount);
-                            ClientSockets.removeElementAt(iCount);
+                            LoginNames.remove(iCount);
+                            ClientSockets.remove(iCount);
+                            olName.remove(LoginNames);
                             System.out.println("User " + Sendto +" Logged Out ...");
                             break;
                         }
                     }
     
                 }
+                
+                //display the Messages in server
                 else
                 {
                     String msg="";
@@ -97,26 +101,25 @@ class AcceptClient extends Thread
                     }
                     for(iCount=0;iCount<LoginNames.size();iCount++)
                     {
-                        if(LoginNames.elementAt(iCount).equals(Sendto))
+                        if(LoginNames.get(iCount).equals(Sendto))
                         {    
-                            Socket tSoc=(Socket)ClientSockets.elementAt(iCount);                            
+                            Socket tSoc=(Socket)ClientSockets.get(iCount);                            
                             DataOutputStream tdout=new DataOutputStream(tSoc.getOutputStream());
-                            tdout.writeUTF(msg);                            
+                            tdout.writeUTF(msg);  
+                            System.out.println(Sendto +" says : " +msg);
                             break;
                         }
                     }
                     
-                    //to display if the client doesnt exist / client logged out
+                    //display the offline message
                     if(iCount==LoginNames.size())
                     {
-                        dout.writeUTF("HTTP/1.1 404 Not Found");
+                        dout.writeUTF("I am offline");
                     }
                     else
                     {
-                        
                     }
                 }
-                
                 if(MsgType.equals("LOGOUT"))
                 {
                     break;
@@ -128,9 +131,8 @@ class AcceptClient extends Thread
                 ex.printStackTrace();
             }
             
-            
-            
         }        
     }
 }
+
 }
