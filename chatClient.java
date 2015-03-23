@@ -98,7 +98,9 @@ public class chatClient extends Frame implements Runnable
     }
     public static void main(String args[]) throws Exception
     {
-        chatClient Client1=new chatClient(args[0],args[1]);
+    String tologin = JOptionPane.showInputDialog("Enter login name");
+    String tochatwith = JOptionPane.showInputDialog("Enter name to chat with");
+    chatClient Client1=new chatClient(tologin,tochatwith);
         Client1.setup();                
      
     }    
