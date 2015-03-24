@@ -6,7 +6,9 @@ import java.io.*;
 import java.util.*;
 import java.util.List;
 import java.awt.*;
-
+/**
+ * Client Class to create connection with Server and start thr chat
+ * */
 public class chatClient extends Frame implements Runnable
 {
 	private static final long serialVersionUID = 1L;
