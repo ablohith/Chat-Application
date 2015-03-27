@@ -6,6 +6,9 @@ import java.io.*;
 import java.util.*;
 import java.util.List;
 import java.awt.*;
+import javax.swing.JOptionPane;
+
+
 /**
  * Client Class to create connection with Server and start thr chat
  * */
@@ -27,6 +30,9 @@ public class chatClient extends Frame implements Runnable
     public List s=new ArrayList();
     private static String tologin;
     
+    /**
+     * constuctor to recive loginname and chat with name
+     */
     chatClient(String LoginName,String chatwith) throws Exception
     {
         super(LoginName);
@@ -41,18 +47,24 @@ public class chatClient extends Frame implements Runnable
         din=new DataInputStream(soc.getInputStream()); 
         dout=new DataOutputStream(soc.getOutputStream());        
         dout.writeUTF(LoginName);
+
 	// Create new thread for the client and start the thread
         t=new Thread(this);
         t.start();
         
     }
     
-    //Default Constucotr
+    /** 
+     * Default Constucotr
+     */
     public chatClient() {
 	}
 
     
-    // Method to create GUI
+    /**
+     * Method to create GUI
+     */
+     
     void setup()
     {
         setSize(800,500);
@@ -69,7 +81,11 @@ public class chatClient extends Frame implements Runnable
 //    	tb.append("\n");
 //    	tb.append(sendTo);
     }
-
+    
+    /**
+     * method to invoke GUI
+     */
+     
     public boolean action(Event e,Object o)
     {
         if(e.arg.equals("Send"))
@@ -99,7 +115,11 @@ public class chatClient extends Frame implements Runnable
         
         return super.action(e,o);
     }
-    public static void main(String args[]) throws Exception
+    
+    /**
+     * main mehod 
+     */
+     public static void main(String args[]) throws Exception
     {
     tologin = JOptionPane.showInputDialog("Enter Port number");
     String tologin = JOptionPane.showInputDialog("Enter login name");
@@ -107,7 +127,11 @@ public class chatClient extends Frame implements Runnable
     chatClient Client1=new chatClient(tologin,tochatwith);
         Client1.setup();                
      
-    }    
+    }
+    
+    /**
+     *    Run the thread for each client
+     */
     public void run()
     {        
         while(true)
