@@ -10,11 +10,15 @@ public class chatServer
     //initialize the variables
     static List ClientSockets;
     static List LoginNames;
+     private static String tologin;
     
 	chatServer() throws Exception
     {
-        //create the socket in the port 5212
-        ServerSocket soc=new ServerSocket(5212);
+        //create the socket in the port entered
+        tologin = JOptionPane.showInputDialog("Enter Port number");
+	//display in close 
+	System.out.println("Server Started at port no." +tologin);
+        ServerSocket soc=new ServerSocket(Integer.parseInt(tologin));
         ClientSockets=new ArrayList();
         LoginNames=new ArrayList();
 
