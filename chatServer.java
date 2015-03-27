@@ -1,6 +1,5 @@
 package com.span.bfs.chat;
 
-
 import java.net.*;
 import java.util.*;
 import java.io.*;
@@ -17,6 +16,7 @@ public class chatServer
     {
         //create the socket in the port entered
         tologin = JOptionPane.showInputDialog("Enter Port number");
+
 	//display in close 
 	System.out.println("Server Started at port no." +tologin);
         ServerSocket soc=new ServerSocket(Integer.parseInt(tologin));
@@ -35,7 +35,6 @@ public class chatServer
     
     public static void main(String args[]) throws Exception
     {
-        
         chatServer ob=new chatServer();
     }
 
@@ -69,7 +68,6 @@ class AcceptClient extends Thread
     {
         while(true)
         {
-            
             try
             {
                 String msgFromClient=new String();
@@ -92,7 +90,6 @@ class AcceptClient extends Thread
                             break;
                         }
                     }
-    
                 }
                 
                 //display the Messages in server
@@ -114,7 +111,6 @@ class AcceptClient extends Thread
                             break;
                         }
                     }
-                    
                     //display the offline message
                     if(iCount==LoginNames.size())
                     {
@@ -128,15 +124,12 @@ class AcceptClient extends Thread
                 {
                     break;
                 }
-
             }
             catch(Exception ex)
             {
                 ex.printStackTrace();
             }
-            
         }        
     }
 }
-
 }
