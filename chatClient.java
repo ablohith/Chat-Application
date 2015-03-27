@@ -25,6 +25,7 @@ public class chatClient extends Frame implements Runnable
     DataOutputStream dout;
     DataInputStream din;
     public List s=new ArrayList();
+    private static String tologin;
     
     chatClient(String LoginName,String chatwith) throws Exception
     {
@@ -36,7 +37,7 @@ public class chatClient extends Frame implements Runnable
         // tb=new TextArea("Online List : \n",50,50);
         btnSend=new Button("Send");
         btnClose=new Button("Close");
-        soc=new Socket("localhost",5212);
+         soc=new Socket("localhost",Integer.parseInt(tologin));
         din=new DataInputStream(soc.getInputStream()); 
         dout=new DataOutputStream(soc.getOutputStream());        
         dout.writeUTF(LoginName);
@@ -100,6 +101,7 @@ public class chatClient extends Frame implements Runnable
     }
     public static void main(String args[]) throws Exception
     {
+    tologin = JOptionPane.showInputDialog("Enter Port number");
     String tologin = JOptionPane.showInputDialog("Enter login name");
     String tochatwith = JOptionPane.showInputDialog("Enter name to chat with");
     chatClient Client1=new chatClient(tologin,tochatwith);
