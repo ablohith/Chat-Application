@@ -4,6 +4,7 @@ package com.span.bfs.chat;
 import java.net.*;
 import java.util.*;
 import java.io.*;
+import javax.swing.JOptionPane;
 
 public class chatServer
 {
@@ -87,7 +88,6 @@ class AcceptClient extends Thread
                         {
                             LoginNames.remove(iCount);
                             ClientSockets.remove(iCount);
-                            olName.remove(LoginNames);
                             System.out.println("User " + Sendto +" Logged Out ...");
                             break;
                         }
