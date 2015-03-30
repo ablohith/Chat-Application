@@ -1,3 +1,9 @@
+/** 
+ * Run the above code as java application
+ * To make request , Enter the following URL in Brower :
+ * http://localhost:1501/httpServer.java
+*/
+
 package com.span.bfs2;
 
 import java.io.BufferedReader;
