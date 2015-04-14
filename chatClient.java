@@ -125,7 +125,7 @@ public class chatClient extends Frame implements Runnable
     String tologin = JOptionPane.showInputDialog("Enter login name");
     String tochatwith = JOptionPane.showInputDialog("Enter name to chat with");
     chatClient Client1=new chatClient(tologin,tochatwith);
-        Client1.setup();                
+    Client1.setup();                
      
     }
     
@@ -138,6 +138,7 @@ public class chatClient extends Frame implements Runnable
         {
             try
             {
+            	// display the messages sent from client in GUI display 
                 ta.append( "\n" + sendTo + " Says :" + din.readUTF());
             }
             catch(Exception ex)
