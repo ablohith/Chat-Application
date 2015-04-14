@@ -10,7 +10,7 @@ public class chatServer
     //initialize the variables
     static List ClientSockets;
     static List LoginNames;
-     private static String tologin;
+    private static String tologin;
     
 	chatServer() throws Exception
     {
@@ -19,7 +19,11 @@ public class chatServer
 
 	//display in close 
 	System.out.println("Server Started at port no." +tologin);
+    
+        // Create socket coonection with the ort specfied
         ServerSocket soc=new ServerSocket(Integer.parseInt(tologin));
+       
+       // Array to store the login names and client ports
         ClientSockets=new ArrayList();
         LoginNames=new ArrayList();
 
@@ -43,10 +47,13 @@ class AcceptClient extends Thread
     Socket ClientSocket;
     DataInputStream din;
     DataOutputStream dout;
+    
+    // method to accept the client connection
     AcceptClient (Socket CSoc) throws Exception
     {
         ClientSocket=CSoc;
 
+        // create stream to exchange port number and messages
         din=new DataInputStream(ClientSocket.getInputStream());
         dout=new DataOutputStream(ClientSocket.getOutputStream());
         
